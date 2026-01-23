@@ -1,0 +1,56 @@
+{
+  "status": "success",
+  "material": {
+    "category": "agricultural",
+    "name": "Rice Straw",
+    "input_mass_g": 100.0,
+    "moisture": 0.3
+  },
+  "process_plan": {
+    "pyrolysis": {
+      "temperature_celsius": 396.0,
+      "duration_hours": 1.64,
+      "atmosphere": "inert"
+    },
+    "activation": {
+      "enabled": true,
+      "type": "chemical",
+      "agent": "HCl",
+      "concentration_percent_wv": 5,
+      "solution_volume_ml": 2000.0,
+      "acid_mass_g": 100.0,
+      "soaking_time_hours": 2
+    },
+    "washing": {
+      "enabled": true,
+      "method": "distilled_water_until_neutral_pH"
+    },
+    "drying": {
+      "temperature_celsius": 80,
+      "duration_hours": 6
+    },
+    "composite_formation": {
+      "enabled": true,
+      "fractions": {
+        "biochar": 0.65,
+        "binder": 0.35,
+        "plasticizer": 0.0
+      },
+      "masses_g": {
+        "biochar": 65.0,
+        "binder": 35.0,
+        "plasticizer": 0.0
+      }
+    }
+  },
+  "predicted_performance": {
+    "co2_adsorption_score": 0.695,
+    "structural_regime": "optimal_composite",
+    "confidence": 0.88
+  },
+  "risk_assessment": {
+    "overall_risk": "low",
+    "most_sensitive_step": "activation"
+  },
+  "scientific_explanation": "The AI jointly optimized thermal conditions and composite composition to balance pore hierarchy and mechanical stability."
+}

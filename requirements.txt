@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+numpy
+math
+typing
+random
+dataclasses
