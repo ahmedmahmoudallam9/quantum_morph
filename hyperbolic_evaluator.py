@@ -68,9 +68,14 @@ class HyperbolicEvaluator:
                 # ---- Mechanical stability proxy ----
                 # Binder improves stability, excess biochar reduces it
                 stability_index = (
-                    0.7 * state.binder_fraction +
-                    0.3 * (1 - abs(state.biochar_fraction - 0.6))
+                    0.5 * state.binder_fraction +
+                    0.2 * (1 - abs(state.biochar_fraction - 0.6)) +
+                    0.15 * (1 - state.activation_level) +
+                    0.1 * (1 - (state.temperature - 300) / 400) +
+                    0.05 * (1 - state.time / 5)
                 )
+
+                
         
                 # Penalize harsh activation on weak composites
                 if state.activation_level > 0.7 and state.binder_fraction < 0.25:
@@ -138,6 +143,7 @@ class HyperbolicEvaluator:
         for p in paths:
             results.append(self.evaluate_path(p, material,goal))
         return results
+
 
 
 
