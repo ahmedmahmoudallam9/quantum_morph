@@ -107,7 +107,7 @@ class HyperbolicEvaluator:
         
             return EvaluationResult(
                 adsorption_score=round(adsorption_score, 3),
-                stability_score=round(avg_stability, 3)و
+                stability_score=round(avg_stability, 3),
                 regime=regime,
                 confidence=round(confidence, 3)
             )
@@ -124,4 +124,5 @@ class HyperbolicEvaluator:
         for p in paths:
             results.append(self.evaluate_path(p, material,goal))
         return results
+
 
