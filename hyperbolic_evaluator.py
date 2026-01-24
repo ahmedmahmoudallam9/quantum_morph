@@ -41,6 +41,18 @@ class HyperbolicEvaluator:
         
             pore_scores = []
             stability_scores = []
+
+            for state in path.path:
+                if goal == "max_co2":
+                    state.biochar_fraction = 0.75
+                    state.binder_fraction = 0.25
+                elif goal == "balanced":
+                    state.biochar_fraction = 0.65
+                    state.binder_fraction = 0.35
+                elif goal == "max_stability":
+                    state.biochar_fraction = 0.55
+                    state.binder_fraction = 0.45
+
         
             for state in path.path:
                 # ---- Hyperbolic proxy for pore hierarchy ----
@@ -126,6 +138,7 @@ class HyperbolicEvaluator:
         for p in paths:
             results.append(self.evaluate_path(p, material,goal))
         return results
+
 
 
 
