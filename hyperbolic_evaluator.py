@@ -37,7 +37,7 @@ class HyperbolicEvaluator:
             """
     
             if not path.path:
-                return EvaluationResult(0.0, "invalid", 0.0)
+                return EvaluationResult(0.0,0.0, "invalid", 0.0)
         
             pore_scores = []
             stability_scores = []
@@ -124,5 +124,6 @@ class HyperbolicEvaluator:
         for p in paths:
             results.append(self.evaluate_path(p, material,goal))
         return results
+
 
 
