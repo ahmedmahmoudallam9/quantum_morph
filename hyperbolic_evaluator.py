@@ -87,6 +87,8 @@ class HyperbolicEvaluator:
                 adsorption_score = avg_pore * 0.3 + avg_stability * 0.7
             elif goal == "balanced":  
                 adsorption_score = avg_pore * 0.5 + avg_stability * 0.5
+            else:
+                adsorption_score = avg_pore * 0.5 + avg_stability * 0.5
 
         
             # ---- Confidence estimation ----
@@ -124,6 +126,7 @@ class HyperbolicEvaluator:
         for p in paths:
             results.append(self.evaluate_path(p, material,goal))
         return results
+
 
 
 
