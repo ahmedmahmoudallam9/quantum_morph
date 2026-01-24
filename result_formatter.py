@@ -107,6 +107,7 @@ class ResultFormatter:
 
             "predicted_performance": {
                 "co2_adsorption_score": evaluation.adsorption_score,
+                "stability_score": evaluation.stability_score,
                 "structural_regime": evaluation.regime,
                 "confidence": round(evaluation.confidence, 2)
             },
@@ -121,3 +122,4 @@ class ResultFormatter:
                 "to balance pore hierarchy and mechanical stability."
             )
         }
+
