@@ -118,7 +118,8 @@ class HyperbolicEvaluator:
             )
             num_trials = getattr(self, "num_trials", 20)
             trial_factor = min(1.0, (num_trials / 50) ** 0.5)
-            final_confidence = 0.9 * base_confidence + 0.5 * trial_factor
+            final_confidence = min(1.0
+                                   ,0.9 * base_confidence + 0.5 * trial_factor)
             confidence = round(final_confidence, 3)
 
 
@@ -143,6 +144,7 @@ class HyperbolicEvaluator:
         for p in paths:
             results.append(self.evaluate_path(p, material,goal))
         return results
+
 
 
 
