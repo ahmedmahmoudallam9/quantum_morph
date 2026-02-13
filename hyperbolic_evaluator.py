@@ -11,7 +11,14 @@ class EvaluationResult:
     stability_score: float
     regime: str
     confidence: float
-    
+
+
+ACTIVATION_EFFECT = {
+    "KOH": 1.15,
+    "H3PO4": 1.05,
+    "HCl": 0.95
+}
+
 
 class HyperbolicEvaluator:
     def __init__(self):
@@ -92,15 +99,19 @@ class HyperbolicEvaluator:
                 regime = "stable_low_adsorption"
             else:
                 regime = "suboptimal"
+            
+            agent = getattr(material, "activation_agent", "HCl")
+            activation_factor = ACTIVATION_EFFECT.get(agent, 1.0)
+
         
             if goal == "max_co2":
-                adsorption_score = avg_pore * 0.8 + avg_stability * 0.2
+                adsorption_score = (avg_pore * 0.8 + avg_stability * 0.2) * activation_factor
             elif goal == "max_stability":
-                adsorption_score = avg_pore * 0.3 + avg_stability * 0.7
+                adsorption_score = (avg_pore * 0.3 + avg_stability * 0.7) * activation_factor
             elif goal == "balanced":  
-                adsorption_score = avg_pore * 0.5 + avg_stability * 0.5
+                adsorption_score = (avg_pore * 0.5 + avg_stability * 0.5) * activation_factor
             else:
-                adsorption_score = avg_pore * 0.5 + avg_stability * 0.5
+                adsorption_score = (avg_pore * 0.5 + avg_stability * 0.5) * activation_factor
 
         
             base_confidence = max(
