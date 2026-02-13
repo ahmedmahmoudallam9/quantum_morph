@@ -1,5 +1,3 @@
-# material_representation.py
-
 from dataclasses import dataclass
 from typing import Dict
 
@@ -12,6 +10,25 @@ class MaterialState:
     moisture_level: float
     uncertainty: float
 
+MATERIAL_DATABASE = {
+    "Rice Straw": {
+        "carbon_richness": 0.58,
+        "oxygen_content": 0.72,
+        "thermal_stability": 0.42,
+        "decomposition_rate": 0.75,
+        "moisture_default": 0.30,
+        "uncertainty": 0.18
+    },
+    "Date Palm Seeds": {
+        "carbon_richness": 0.68,
+        "oxygen_content": 0.60,
+        "thermal_stability": 0.55,
+        "decomposition_rate": 0.55,
+        "moisture_default": 0.25,
+        "uncertainty": 0.15
+    }
+}
+
 
 class MaterialInterpreter:
     def __init__(self):
@@ -21,25 +38,20 @@ class MaterialInterpreter:
         """
         Convert vague waste information into a unified material state.
         """
+        material_name = user_input.get("material_name", "unknown")
+        material_data = MATERIAL_DATABASE.get(material_name)
 
         category = user_input.get("category", "unknown")
         moisture = user_input.get("moisture", 0.3)
 
-        # Default assumptions (universal baseline)
         carbon_richness = 0.5
         oxygen_content = 0.5
         thermal_stability = 0.5
         decomposition_rate = 0.5
         uncertainty = 0.4
 
-        if category == "agricultural":
-            carbon_richness = 0.6
-            oxygen_content = 0.7
-            thermal_stability = 0.4
-            decomposition_rate = 0.7
-            uncertainty = 0.2
 
-        elif category == "plastic":
+        if category == "plastic":
             carbon_richness = 0.8
             oxygen_content = 0.2
             thermal_stability = 0.8
@@ -52,12 +64,35 @@ class MaterialInterpreter:
             thermal_stability = 0.45
             decomposition_rate = 0.6
             uncertainty = 0.3
+        
+        elif category == "agricultural":
+            carbon_richness = 0.6
+            oxygen_content = 0.7
+            thermal_stability = 0.45
+            decomposition_rate = 0.7
+            uncertainty = 0.25
 
-        return MaterialState(
-            carbon_richness=carbon_richness,
-            oxygen_content=oxygen_content,
-            thermal_stability=thermal_stability,
-            decomposition_rate=decomposition_rate,
-            moisture_level=moisture,
-            uncertainty=uncertainty
-        )
+
+        if material_data:
+            moisture = user_input.get(
+                "moisture",
+                material_data["moisture_default"]
+            )
+
+            return MaterialState(
+                carbon_richness=material_data["carbon_richness"],
+                oxygen_content=material_data["oxygen_content"],
+                thermal_stability=material_data["thermal_stability"],
+                decomposition_rate=material_data["decomposition_rate"],
+                moisture_level=moisture,
+                uncertainty=material_data["uncertainty"]
+            )
+        else:
+            return MaterialState(
+                carbon_richness=carbon_richness,
+                oxygen_content=oxygen_content,
+                thermal_stability=thermal_stability,
+                decomposition_rate=decomposition_rate,
+                moisture_level=moisture,
+                uncertainty=uncertainty
+            )
