@@ -1,5 +1,3 @@
-# transformation_space.py
-
 from dataclasses import dataclass
 from typing import List
 import numpy as np
@@ -26,12 +24,10 @@ class TransformationSpace:
         Generate a feasible transformation space based on material behavior.
         """
 
-        # Base ranges (universal defaults)
-        temp_min, temp_max = 300, 900
-        time_min, time_max = 0.5, 3.0
+        temp_min, temp_max = 500, 900
+        time_min, time_max = 1.5, 4.0
         activation_min, activation_max = 0.0, 1.0
 
-        # Adapt ranges based on material stability
         stability = material.thermal_stability
 
         temp_max = temp_min + stability * (temp_max - temp_min)
@@ -40,7 +36,7 @@ class TransformationSpace:
         temperatures = np.linspace(temp_min, temp_max, 6)
         times = np.linspace(time_min, time_max, 5)
         activations = np.linspace(activation_min, activation_max, 4)
-        # ---- COMPOSITION SPACE ----
+
         if material.thermal_stability < 0.5:
             biochar_range = [0.45, 0.55, 0.65]
             binder_range = [0.25, 0.35]
