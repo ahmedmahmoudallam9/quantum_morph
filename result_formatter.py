@@ -1,5 +1,3 @@
-# result_formatter.py
-
 from typing import Dict
 from quantum_walk_engine import WalkResult
 from hyperbolic_evaluator import EvaluationResult
@@ -7,7 +5,6 @@ from material_representation import MaterialState
 
 
 def quantify_activation(mass_g, concentration_percent):
-    # 5% w/v → 5 g / 100 mL
     solution_volume_ml = mass_g * 20
     acid_mass_g = solution_volume_ml * concentration_percent / 100
     return solution_volume_ml, acid_mass_g
@@ -36,37 +33,36 @@ class ResultFormatter:
         goal = user_input.get("processing_goal")
         mass_g = user_input.get("mass", 20)
 
-        # ---- PYROLYSIS ----
         pyrolysis = {
             "temperature_celsius": round(avg_temp, 1),
             "duration_hours": round(avg_time, 2),
             "atmosphere": "inert"
         }
 
-        # ---- ACTIVATION ----
         activation = {"enabled": False}
 
         if goal in ("activated_carbon", "composite_filter"):
-            concentration = 5  # % w/v (AI-selected baseline)
+            concentration = 5  
             solution_volume, acid_mass = quantify_activation(mass_g, concentration)
+        
+            activation_input = user_input.get("activation", {})
+            agent = activation_input.get("agent", "HCl")
 
             activation = {
                 "enabled": True,
                 "type": "chemical",
-                "agent": "HCl",
+                "agent": agent,
                 "concentration_percent_wv": concentration,
                 "solution_volume_ml": round(solution_volume, 1),
                 "acid_mass_g": round(acid_mass, 2),
                 "soaking_time_hours": 2
             }
 
-        # ---- DRYING ----
         drying = {
             "temperature_celsius": 80,
             "duration_hours": 6
         }
 
-        # ---- COMPOSITE ----
         composite = {"enabled": False}
 
         if goal == "composite_filter":
