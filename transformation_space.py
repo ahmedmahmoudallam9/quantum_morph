@@ -25,7 +25,7 @@ class TransformationSpace:
         """
 
         temp_min, temp_max = 500, 900
-        time_min, time_max = 1.5, 4.0
+        time_min, time_max = 1.0, 4.0
         activation_min, activation_max = 0.0, 1.0
 
         stability = material.thermal_stability
@@ -67,3 +67,4 @@ class TransformationSpace:
                                         )
                                     )
         return space
+
