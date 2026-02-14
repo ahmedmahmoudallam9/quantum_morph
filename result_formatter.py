@@ -6,7 +6,7 @@ from material_representation import MaterialState
 
 def quantify_activation(mass_g, concentration_percent):
     solution_volume_ml = mass_g * 20
-    acid_mass_g = solution_volume_ml * concentration_percent / 100
+    acid_mass_g = (solution_volume_ml * concentration_percent / 100) * 3
     return solution_volume_ml, acid_mass_g
 
 
@@ -118,4 +118,5 @@ class ResultFormatter:
                 "to balance pore hierarchy and mechanical stability."
             )
         }
+
 
