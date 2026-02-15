@@ -60,7 +60,8 @@ class HyperbolicEvaluator:
             for state in path.path:
                 pore_index = (
                     0.6 * state.activation_level +
-                    0.4 * state.biochar_fraction
+                    0.4 * state.biochar_fraction +
+                    0.2 * (state.temperature - 450) / 450
                 )
         
                 pore_index *= (1 - state.plasticizer_fraction)
@@ -147,3 +148,4 @@ class HyperbolicEvaluator:
         for p in paths:
             results.append(self.evaluate_path(p, material,goal))
         return results
+
